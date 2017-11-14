@@ -1,0 +1,128 @@
+<!--ΕΦΟΣΟΝ ΤΑ ΣΤΟΙΧΕΙΑ ΤΟΥ ΧΡΗΣΤΗ ΕΙΝΑΙ ΤΑ ΣΩΣΤΑ ΘΑ ΔΡΟΜΟΛΟΓΗΘΕΙ ΣΤΟ ΧΑΡΤΗ 
+ΓΙΑ ΝΑ ΚΑΝΕΙ ΤΗΝ ΕΠΙΛΟΓΗ ΤΟΥ ΓΙΑ ΠΡΟΣΦΟΡΕΣ ΠΟΤΩΝ-->
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+ 
+    <title>Dropdown Menu UI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.css'>
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Lato:300'>
+
+    <link rel="stylesheet" href="css/style_1.css">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+          background-color: #FFF8F0;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        margin-left: -52px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <h1>ΕΠΕΛΕΞΕ ΠΕΡΙΟΧΗ</h1>
+
+<div class="content">
+	<div class="admin-panel"><b class="admin-text">ΑΘΗΝΑ</b></div>
+	<span class="cog octicon octicon-gear"></span>
+	<div class="menu">
+		<div class="arrow"></div>
+			<a href="drinkAthens.jsp">ΑΘΗΝΑ,ΚΕΝΤΡΟ</a>
+			<a href="drinkPeristeri.jsp">ΠΕΡΙΣΤΕΡΙ</a>
+			<a href="drinkPiraeus.jsp">ΠΕΙΡΑΙΑΣ</a>	
+		</div>
+	</div>
+
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/newcities.js"></script>
+
+     
+        <div id="floating-panel">
+      <button id="drop" onclick="drop()">ΔΕΣ ΕΔΩ!!</button>
+    </div>
+        
+    <form action="logout.jsp"> <button class ="btn-sm" type="submit">log out</button></form> 
+              
+    <div id="map"></div>
+   <script>
+
+      // If you're adding a number of markers, you may want to drop them on the map
+      // consecutively rather than all at once. This example shows how to use
+      // window.setTimeout() to space your markers' animation.
+
+      var neighborhoods = [
+        {lat: 37.977695, lng: 23.727272},
+        {lat: 37.978933, lng: 23.729943},
+        {lat: 38.011644, lng: 23.690884}, 
+        {lat: 38.011535, lng: 23.693198},
+        {lat: 37.941263, lng: 23.643148},
+        {lat: 37.942460, lng: 23.647825} 
+        
+      ];
+
+      var markers = [];
+      var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 37.984117, lng: 23.727215}
+        });
+      }
+
+      function drop() {
+        clearMarkers();
+        for (var i = 0; i < neighborhoods.length; i++) {
+          addMarkerWithTimeout(neighborhoods[i], i * 200);
+        }
+      }
+
+      function addMarkerWithTimeout(position, timeout) {
+        window.setTimeout(function() {
+          markers.push(new google.maps.Marker({
+            position: position,
+            map: map,
+            animation: google.maps.Animation.DROP
+          }));
+        }, timeout);
+      }
+
+      function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+    </script>
+    
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfORQ4t3dSCLO-yFzMohUEbPk5nt1ey88&callback=initMap">
+    </script>  
+    
+  </body>
+</html>
